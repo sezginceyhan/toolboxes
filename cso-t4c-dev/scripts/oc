@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+echo "Install oc-client"
+
+ocp_client_mirror_url_v4="https://mirror.openshift.com/pub/openshift-v4/clients/ocp"
+ocp_client_version="stable-4.4"
+
+url=$ocp_client_mirror_url_v4/$ocp_client_version/openshift-client-linux.tar.gz
+
+curl $url | tar -C /usr/local/bin -xvzf - oc

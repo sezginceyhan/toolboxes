@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+set -e
+
+echo "Install tekton"
+
+dnf copr enable -y chmouel/tektoncd-cli
+dnf install -y tektoncd-cli

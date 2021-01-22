@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+set -e
+
+mkdir -p /etc/sudoers.d
+
+cat << EOF > /etc/sudoers.d/keep-env
+Defaults  env_keep += "http_proxy"
+Defaults  env_keep += "https_proxy"
+Defaults  env_keep += "HTTP_PROXY"
+Defaults  env_keep += "HTTPS_PROXY"
+Defaults  env_keep += "ftp_proxy"
+Defaults  env_keep += "FPT_PROXY"
+Defaults  env_keep += "no_proxy"
+Defaults  env_keep += "NO_PROXY"
+EOF
+
+chmod 0440 /etc/sudoers.d/keep-env

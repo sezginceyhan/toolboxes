@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+set -e
+
+./keep-sudo
+./packages
+./vscode
+./oc
+./kubectl
+./tekton
+./helm
