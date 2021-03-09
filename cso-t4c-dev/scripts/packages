@@ -1,6 +1,0 @@
-#!/usr/bin/env bash
-set -euo pipefail
-
-echo "Install packages"
-
-dnf install -y make vim openssl httpie golang git git-lfs bind-utils

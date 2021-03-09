@@ -1,0 +1,57 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+
+echo -e "[INFO] starting to install zsh.."
+
+dnf install -y fontawesome-fonts util-linux-user zsh powerline-fonts
+
+#usermod -s $(which zsh) $USER
+
+
+echo -e "[INFO] starting to install oh my zsh.."
+ZSH="$HOME/.oh-my-zsh"
+
+if [ ! -d "$(realpath $ZSH)" ]; then
+  sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
+fi
+echo "PATH is $(realpath $ZSH)"
+
+plugin_list="(git ssh-agent docker helm kubectl golang dnf zsh-autosuggestions zsh-completions)"  
+THEME="powerlevel10k/powerlevel10k"
+
+if [ ! -d "$ZSH/custom/themes/powerlevel10k" ]; then
+ git clone https://github.com/romkatv/powerlevel10k $ZSH/custom/themes/powerlevel10k
+fi
+
+if [ ! -d "$ZSH/custom/plugins/zsh-autosuggestions" ]; then
+  git clone https://github.com/zsh-users/zsh-autosuggestions $ZSH/custom/plugins/zsh-autosuggestions
+fi
+
+if [ ! -d "$ZSH/custom/plugins/zsh-syntax-highlighting" ]; then
+ git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $ZSH/custom/plugins/zsh-syntax-highlighting
+fi
+
+if [ ! -d "$ZSH/custom/plugins/zsh-completions" ]; then
+ git clone https://github.com/zsh-users/zsh-completions.git $ZSH/custom/plugins/zsh-completions
+fi
+
+
+cp \
+  $ZSH/templates/zshrc.zsh-template \
+  $HOME/.zshrc
+
+if [ ! -f "$ZSH/.p10k.zsh"  ]; then
+  cp p10k.zsh $HOME/.p10k.zsh
+fi
+#cat $HOME/.zshrc
+
+cat <<EOF >> $HOME/.zshrc
+plugins=$plugin_list
+ZSH_THEME="$THEME"
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+source $ZSH/oh-my-zsh.sh
+EOF
+
+exec zsh
+

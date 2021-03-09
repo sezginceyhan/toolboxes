@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+echo "Install packages"
+
+dnf install -y \
+    make \
+    vim \
+    openssl \
+    git \
+    bind-utils
+    # httpie \
+    # golang \
+    # git-lfs \

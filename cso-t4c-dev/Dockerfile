@@ -12,11 +12,18 @@ LABEL org.opencontainers.image.created="$BUILD_DATE" \
       org.opencontainers.image.title="T4C Cloud development image" \
       org.opencontainers.image.description="Development environment for Kubernetes and Red Hat Openshift workloads"
 
-WORKDIR /tmp/scripts
-COPY scripts /tmp/scripts/
+COPY scripts/base /tmp/scripts/base
 
-RUN /tmp/scripts/install \
+WORKDIR /tmp/scripts/base
+
+RUN /tmp/scripts/base/install
+
+COPY scripts/apps /tmp/scripts/apps
+
+WORKDIR /tmp/scripts/apps
+
+RUN /tmp/scripts/apps/install \
     && rm -rf /tmp/scripts \
     && dnf clean all
 
-CMD /bin/sh
+CMD [ "/bin/bash", "-c", "zsh" ]

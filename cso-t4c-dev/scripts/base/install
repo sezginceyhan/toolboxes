@@ -3,8 +3,8 @@ set -e
 
 ./keep-sudo
 ./packages
-./vscode
-./oc
-./kubectl
-./tekton
-./helm
+#./vscode
+# ./kubectl
+# ./helm
+# ./oc
+# ./tekton
