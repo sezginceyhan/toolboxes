@@ -2,4 +2,8 @@
 set -e
 
 ./oh-my-zsh
+./vscode
+./kubectl
+./helm
+
 
