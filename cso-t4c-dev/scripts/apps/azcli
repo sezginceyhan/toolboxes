@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+set -eu
+
+pip3 install --no-cache-dir --upgrade pip setuptools wheel
+python3 -m pip install --no-cache-dir azure-cli
+az extension add --yes --name azure-devops

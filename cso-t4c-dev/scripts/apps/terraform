@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+set -eu
+
+terraform_version=0.14.7
+
+#curl -sLo terraform.zip "https://releases.hashicorp.com/terraform/${terraform_version}/terraform_${terraform_version}_linux_amd64.zip"
+#unzip terraform.zip && rm terraform.zip
+#chmod +x ./terraform
+#sudo mv ./terraform /usr/local/bin/
+#terraform --version
+
+dnf config-manager --add-repo https://rpm.releases.hashicorp.com/fedora/hashicorp.repo
+dnf install -y terraform

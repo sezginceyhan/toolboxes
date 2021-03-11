@@ -8,7 +8,10 @@ dnf install -y \
     vim \
     openssl \
     git \
-    bind-utils
-    # httpie \
-    # golang \
-    # git-lfs \
+    httpie \
+    golang \
+    git-lfs \
+    bind-utils \
+    python3 \
+    python3-pip
+

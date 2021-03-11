@@ -53,5 +53,3 @@ ZSH_THEME="$THEME"
 source $ZSH/oh-my-zsh.sh
 EOF
 
-exec zsh
-

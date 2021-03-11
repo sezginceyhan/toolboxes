@@ -6,4 +6,19 @@ echo "Install vscode"
 rpm --import https://packages.microsoft.com/keys/microsoft.asc
 sh -c 'echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/yum.repos.d/vscode.repo'
 
-dnf install -y code libX11-xcb libdrm libgbm
+dnf install -y code libX11-xcb libdrm libgbm 
+
+
+echo "[INFO] Adding extensions to entrypoint script"
+cat <<EOF >> $HOME/.entrypoint.sh
+code --install-extension ms-python.python 
+code --install-extension esbenp.prettier-vscode
+code --install-extension vscode-icons-team.vscode-icons
+code --install-extension alphabotsec.vscode-eclipse-keybindings
+code --install-extension golang.Go
+code --install-extension MS-vsliveshare.vsliveshare
+code --install-extension redhat.vscode-yaml
+code --install-extension zhuangtongfa.Material-theme
+code --install-extension DavidAnson.vscode-markdownlint
+code --install-extension yzhang.markdown-all-in-one
+EOF

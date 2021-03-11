@@ -25,5 +25,6 @@ WORKDIR /tmp/scripts/apps
 RUN /tmp/scripts/apps/install \
     && rm -rf /tmp/scripts \
     && dnf clean all
-
-CMD [ "/bin/bash", "-c", "zsh" ]
+ 
+#CMD [ "/bin/bash", "-c", "zsh" ]
+CMD [ "zsh" ]

@@ -3,8 +3,7 @@ set -e
 
 ./keep-sudo
 ./packages
-#./vscode
-# ./kubectl
-# ./helm
-# ./oc
-# ./tekton
+
+# Create entrypoint script for addiotional steps after toolbox is started (to run as user, instead of root)
+cp .entrypoint.sh $HOME/.entrypoint.sh
+chmod +x $HOME/.entrypoint.sh
