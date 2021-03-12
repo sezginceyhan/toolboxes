@@ -27,4 +27,4 @@ RUN /tmp/scripts/apps/install \
     && dnf clean all
  
 #CMD [ "/bin/bash", "-c", "zsh" ]
-CMD [ "zsh" ]
+CMD [ "/bin/zsh" ]

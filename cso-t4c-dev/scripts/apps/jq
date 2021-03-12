@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+set -eu
+
+dnf install -y jq

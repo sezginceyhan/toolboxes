@@ -4,6 +4,7 @@ set -e
 ./oh-my-zsh
 ./terraform
 ./yq
+./jq
 ./azcli
 ./vscode
 ./kubectl

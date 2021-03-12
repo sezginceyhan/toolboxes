@@ -21,4 +21,5 @@ code --install-extension redhat.vscode-yaml
 code --install-extension zhuangtongfa.Material-theme
 code --install-extension DavidAnson.vscode-markdownlint
 code --install-extension yzhang.markdown-all-in-one
+code --install-extension wholroyd.jinja
 EOF
