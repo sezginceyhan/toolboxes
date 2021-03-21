@@ -3,14 +3,31 @@ set -e
 
 echo "Install kubectl"
 
-cat <<EOF > /etc/yum.repos.d/kubernetes.repo
-[kubernetes]
-name=Kubernetes
-baseurl=https://packages.cloud.google.com/yum/repos/kubernetes-el7-x86_64
-enabled=1
-gpgcheck=1
-repo_gpgcheck=1
-gpgkey=https://packages.cloud.google.com/yum/doc/yum-key.gpg https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
+if [ -d "/etc/yum.repos.d" ]; then
+    cat <<EOF > /etc/yum.repos.d/kubernetes.repo
+    [kubernetes]
+    name=Kubernetes
+    baseurl=https://packages.cloud.google.com/yum/repos/kubernetes-el7-x86_64
+    enabled=1
+    gpgcheck=1
+    repo_gpgcheck=1
+    gpgkey=https://packages.cloud.google.com/yum/doc/yum-key.gpg https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
 EOF
+  
+elif [ -d "/etc/apt/sources.list.d/" ]; then
+    curl -fsSLo /usr/share/keyrings/kubernetes-archive-keyring.gpg https://packages.cloud.google.com/apt/doc/apt-key.gpg
+    echo "deb [signed-by=/usr/share/keyrings/kubernetes-archive-keyring.gpg] https://apt.kubernetes.io/ kubernetes-xenial main" | tee /etc/apt/sources.list.d/kubernetes.list
+fi
 
-dnf install -y kubectl
+package_list="kubectl"
+
+if [ -f "/bin/dnf" ]; then
+    dnf upgrade -y
+    dnf install -y $package_list
+elif [ -f "/bin/yum" ] || [ -f "/usr/bin/yum" ]; then
+    yum upgrade
+    yum install -y $package_list
+elif [ -f "/usr/bin/apt-get" ]; then
+    apt-get upgrade -y
+    apt-get install -y $package_list
+fi

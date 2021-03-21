@@ -5,15 +5,11 @@ set -eu
 #pip3 install --no-cache-dir --upgrade pip setuptools wheel
 #python3 -m pip install --no-cache-dir azure-cli
 #az extension add --yes --name azure-devops  
-rpm --import https://packages.microsoft.com/keys/microsoft.asc
 
-echo -e "[azure-cli]
-name=Azure CLI
-baseurl=https://packages.microsoft.com/yumrepos/azure-cli
-enabled=1
-gpgcheck=1
-gpgkey=https://packages.microsoft.com/keys/microsoft.asc" | tee /etc/yum.repos.d/azure-cli.repo
 
-dnf install -y azure-cli
+# dnf install -y azure-cli
 
-az extension add --yes --name azure-devops  
+curl -L https://aka.ms/InstallAzureCli | bash
+
+
+az extension add --yes --name azure-devops

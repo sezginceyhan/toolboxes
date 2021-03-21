@@ -4,7 +4,23 @@ set -euo pipefail
 
 echo -e "[INFO] starting to install zsh.."
 
-dnf install -y fontawesome-fonts util-linux-user zsh powerline-fonts
+package_list=" \
+    fontawesome-fonts \
+    util-linux-user \
+    zsh \
+    powerline-fonts
+"
+
+if [ -f "/bin/dnf" ]; then
+    dnf upgrade -y
+    dnf install -y $package_list
+elif [ -f "/bin/yum" ] || [ -f "/usr/bin/yum" ]; then
+    yum upgrade
+    yum install -y $package_list
+elif [ -f "/usr/bin/apt-get" ]; then
+    apt-get upgrade -y
+    apt-get install -y $package_list
+fi
 
 #usermod -s $(which zsh) $USER
 
@@ -21,7 +37,7 @@ plugin_list="(git ssh-agent docker helm kubectl golang dnf zsh-autosuggestions z
 THEME="powerlevel10k/powerlevel10k"
 
 if [ ! -d "$ZSH/custom/themes/powerlevel10k" ]; then
- git clone https://github.com/romkatv/powerlevel10k $ZSH/custom/themes/powerlevel10k
+  git clone https://github.com/romkatv/powerlevel10k $ZSH/custom/themes/powerlevel10k
 fi
 
 if [ ! -d "$ZSH/custom/plugins/zsh-autosuggestions" ]; then
@@ -29,14 +45,14 @@ if [ ! -d "$ZSH/custom/plugins/zsh-autosuggestions" ]; then
 fi
 
 if [ ! -d "$ZSH/custom/plugins/zsh-syntax-highlighting" ]; then
- git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $ZSH/custom/plugins/zsh-syntax-highlighting
+  git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $ZSH/custom/plugins/zsh-syntax-highlighting
 fi
 
 if [ ! -d "$ZSH/custom/plugins/zsh-completions" ]; then
- git clone https://github.com/zsh-users/zsh-completions.git $ZSH/custom/plugins/zsh-completions
+  git clone https://github.com/zsh-users/zsh-completions.git $ZSH/custom/plugins/zsh-completions
 fi
 
-
+echo "Copy zshrc from template"
 cp \
   $ZSH/templates/zshrc.zsh-template \
   $HOME/.zshrc
@@ -50,6 +66,8 @@ cat <<EOF >> $HOME/.zshrc
 plugins=$plugin_list
 ZSH_THEME="$THEME"
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+# set ctr+space to accept auto-suggestions
+bindkey '^ ' autosuggest-accept
 source $ZSH/oh-my-zsh.sh
 EOF
 

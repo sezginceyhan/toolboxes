@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 set -e
-
+./nodejs
+./golang
 ./oh-my-zsh
 ./terraform
 ./yq

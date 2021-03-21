@@ -1,13 +1,33 @@
 #!/usr/bin/env bash
 set -eu
 
-terraform_version=0.14.7
-
+#terraform_version=0.14.7
 #curl -sLo terraform.zip "https://releases.hashicorp.com/terraform/${terraform_version}/terraform_${terraform_version}_linux_amd64.zip"
 #unzip terraform.zip && rm terraform.zip
 #chmod +x ./terraform
 #sudo mv ./terraform /usr/local/bin/
 #terraform --version
 
-dnf config-manager --add-repo https://rpm.releases.hashicorp.com/fedora/hashicorp.repo
-dnf install -y terraform
+
+
+
+echo "Install kubectl"
+
+if [ -d "/etc/yum.repos.d" ]; then
+    yum-config-manager --add-repo https://rpm.releases.hashicorp.com/RHEL/hashicorp.repo
+
+elif [ -d "/etc/apt/sources.list.d/" ]; then
+    curl -fsSL https://apt.releases.hashicorp.com/gpg | apt-key add -
+    apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
+fi
+
+if [ -f "/bin/dnf" ]; then
+    dnf config-manager --add-repo https://rpm.releases.hashicorp.com/fedora/hashicorp.repo
+    dnf install -y terraform
+elif [ -f "/bin/yum" ] || [ -f "/usr/bin/yum" ]; then
+    yum install -y terraform
+elif [ -f "/usr/bin/apt-get" ]; then
+    apt-get install -y terraform   
+fi
+
+

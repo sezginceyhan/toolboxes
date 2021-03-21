@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+set -e
+
+# Use util lib
+source $(dirname $0)/../base/utils
+
+
+echo "Install nodejs"
+
+if [ -d "/etc/yum.repos.d" ]; then
+    echo "not implemented"
+elif [ -d "/etc/apt/sources.list.d/" ]; then
+    curl -sL https://deb.nodesource.com/setup_15.x | bash -
+
+fi
+
+install_packages nodejs

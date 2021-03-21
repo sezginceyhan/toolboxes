@@ -1,4 +1,13 @@
 #!/usr/bin/env bash
 set -eu
 
-dnf install -y jq
+
+
+package_list="jq"
+if [ -f "/bin/dnf" ]; then
+    dnf install -y $package_list
+elif [ -f "/bin/yum" ] || [ -f "/usr/bin/yum" ]; then
+    yum install -y $package_list
+elif [ -f "/usr/bin/apt-get" ]; then
+    apt-get install -y $package_list 
+fi

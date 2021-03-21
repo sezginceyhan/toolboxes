@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+set -e
+
+step() {
+    local color='\033[1;37m'
+    local nc='\033[0m'
+    printf "\n${color}$1${nc}\n"
+}
+
+
+install_packages() {
+
+package_list=$1
+
+if [ -f "/bin/dnf" ]; then
+    step "Installing packages via dnf" 
+    dnf install -y $package_list
+elif [ -f "/bin/yum" ] || [ -f "/usr/bin/yum" ]; then
+    step "Installing packages via yum" 
+    yum install -y $package_list
+elif [ -f "/usr/bin/apt-get" ]; then
+    step "Installing packages via apt" 
+    apt-get install -y $package_list
+fi
+
+}

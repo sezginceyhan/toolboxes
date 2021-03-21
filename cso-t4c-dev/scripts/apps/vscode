@@ -3,13 +3,37 @@ set -eu
 
 echo "Install vscode"
 
-rpm --import https://packages.microsoft.com/keys/microsoft.asc
-sh -c 'echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/yum.repos.d/vscode.repo'
 
-dnf install -y code libX11-xcb libdrm libgbm 
+if [ -d "/etc/yum.repos.d" ]; then
+    rpm --import https://packages.microsoft.com/keys/microsoft.asc
+    sh -c 'echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/yum.repos.d/vscode.repo'
+
+elif [ -d "/etc/apt/sources.list.d/" ]; then
+    wget -q https://packages.microsoft.com/keys/microsoft.asc -O- | apt-key add -
+    add-apt-repository "deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main"
+fi
 
 
-echo "[INFO] Adding extensions to entrypoint script"
+
+package_list=" \
+    libX11-xcb \
+    libdrm \
+    libgbm \
+    code
+"
+
+if [ -f "/bin/dnf" ]; then
+    dnf upgrade -y
+    dnf install -y $package_list
+elif [ -f "/bin/yum" ] || [ -f "/usr/bin/yum" ]; then
+    yum upgrade
+    yum install -y $package_list
+elif [ -f "/usr/bin/apt-get" ]; then
+    apt-get upgrade -y
+    apt-get install -y $package_list
+fi
+
+echo -e "[INFO]\t Adding extensions to entrypoint script"
 cat <<EOF >> $HOME/.entrypoint.sh
 code --install-extension ms-python.python 
 code --install-extension esbenp.prettier-vscode
