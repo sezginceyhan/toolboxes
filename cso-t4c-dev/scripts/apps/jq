@@ -1,13 +1,7 @@
 #!/usr/bin/env bash
 set -eu
 
+# Use util lib
+source $(dirname $0)/../base/utils
 
-
-package_list="jq"
-if [ -f "/bin/dnf" ]; then
-    dnf install -y $package_list
-elif [ -f "/bin/yum" ] || [ -f "/usr/bin/yum" ]; then
-    yum install -y $package_list
-elif [ -f "/usr/bin/apt-get" ]; then
-    apt-get install -y $package_list 
-fi
+install_packages jq

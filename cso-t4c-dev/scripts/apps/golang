@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 set -e
 
+# Use util lib
+source $(dirname $0)/../base/utils
+
 echo "Install golang"
 
 # Use util lib
@@ -8,7 +11,7 @@ source $(dirname $0)/../base/utils
 
 
 if [ -f "/usr/bin/apt-get" ]; then
-    add-apt-repository ppa:longsleep/golang-backports
+    add-apt-repository -y ppa:longsleep/golang-backports
     apt update
 fi
 

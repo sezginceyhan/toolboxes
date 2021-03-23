@@ -19,15 +19,10 @@ elif [ -d "/etc/apt/sources.list.d/" ]; then
     echo "deb [signed-by=/usr/share/keyrings/kubernetes-archive-keyring.gpg] https://apt.kubernetes.io/ kubernetes-xenial main" | tee /etc/apt/sources.list.d/kubernetes.list
 fi
 
-package_list="kubectl"
-
 if [ -f "/bin/dnf" ]; then
     dnf upgrade -y
-    dnf install -y $package_list
-elif [ -f "/bin/yum" ] || [ -f "/usr/bin/yum" ]; then
-    yum upgrade
-    yum install -y $package_list
+    dnf install -y kubectl
 elif [ -f "/usr/bin/apt-get" ]; then
-    apt-get upgrade -y
-    apt-get install -y $package_list
+    apt-get update
+    apt-get install -y kubeadm kubelet kubectl kubernetes-cni
 fi

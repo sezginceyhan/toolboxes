@@ -10,5 +10,3 @@ set -e
 ./vscode
 ./kubectl
 ./helm
-
-

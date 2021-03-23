@@ -3,5 +3,16 @@ set -e
 
 echo "Install tekton"
 
-dnf copr enable -y chmouel/tektoncd-cli
-dnf install -y tektoncd-cli
+
+
+
+if [ -f "/usr/bin/apt-get" ]; then
+    dnf copr enable -y chmouel/tektoncd-cli
+    dnf install -y tektoncd-cli
+
+elif [ -d "/etc/apt/sources.list.d/" ]; then
+    curl -LO https://github.com/tektoncd/cli/releases/download/v0.14qqq.0/tektoncd-cli-0.17.0_Linux-64bit.deb
+    dpkg -i tektoncd-cli-0.17.0_Linux-64bit.deb
+    apt update
+    apt install -y tektoncd-cli
+fi
